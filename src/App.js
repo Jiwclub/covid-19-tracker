@@ -1,24 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+
+import "leaflet/dist/leaflet.css";
+import "./Css/App.scss";
+import Axios from "axios";
+import { MapView } from "./Components/MapView";
+import {ListView} from './Components/ListView'
+
+const api = "https://coronavirus-tracker-api.herokuapp.com/v2/locations";
 
 function App() {
+  const [locationArray, setLocationArray] = useState([]);
+
+  const sortedLocationArray = (locations) => {
+		return [...locations].sort((location1, location2) => {
+			return location2.latest.confirmed - location1.latest.confirmed;
+		});
+	}
+
+  // useEffectจะโหลด api หลังจาก components app rander แล้ว
+  useEffect(() => {
+    Axios.get(api).then(response =>{
+      const sortedLocations = sortedLocationArray(response.data.locations);
+      setLocationArray(sortedLocations);
+    }).catch(error =>{
+      console.log(error);
+    })
+  },[]);
+  // console.log(locationArray)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      
+      <ListView
+      locationArray={locationArray}
+       />
+      <MapView 
+      locationArray={locationArray}
+       />
+      
+     
     </div>
   );
 }
