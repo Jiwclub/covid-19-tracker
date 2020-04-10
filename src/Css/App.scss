@@ -91,25 +91,25 @@
 
 // Details view
 
-// .details-view {
-//     background-color: white;
-//     border-top: 10px solid $black-ter;
-//     box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
-//     width: 322px;
-//     padding: 20px;
-//     position: fixed;
-//     left: 50%;
-//     bottom: 0px;
-//     z-index: 20;
-//     transform: translateX(-50%);
-// }
+.details-view {
+    background-color: white;
+    border-top: 10px solid $black-ter;
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
+    width: 322px;
+    padding: 20px;
+    position: fixed;
+    left: 50%;
+    bottom: 0px;
+    z-index: 20;
+    transform: translateX(-50%);
+}
 
-// .details-view-close {
-//     font-size: 32px;
-//     line-height: 0.8;
-//     position: absolute;
-//     top: 12px;
-//     right: 12px;
-//     z-index: 22;
-//     cursor: pointer;
-// }
+.details-view-close {
+    font-size: 32px;
+    line-height: 0.8;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 22;
+    cursor: pointer;
+}

@@ -3,7 +3,18 @@ import React from "react";
 const totalKeyArray = ["confirmed", "recovered", "deaths"];
 
 export const ListView = (props) => {
-  const { locationArray } = props;
+  const {
+    locationArray,
+    selectedLocation,
+    onSelectItem,
+    onDeselectItem,
+  } = props;
+
+  function onClickItem(id) {
+    if (selectedLocation === null) onSelectItem(id);
+    else if (selectedLocation.id !== id) onSelectItem(id);
+    else onDeselectItem();
+  }
 
   const totalElements = totalKeyArray.map((key) => {
     const sum = locationArray.reduce((sum, location) => {
@@ -37,8 +48,19 @@ export const ListView = (props) => {
       title = `${province}, ${country}`;
     }
 
+    let locationClass = 'list-view-location';
+    if (selectedLocation !== null) {
+        if (location.id === selectedLocation.id) {
+            locationClass += ' selected';
+        }
+    }
+
     return (
-      <div key={`${id}-${country_code}`} className={"list-view-location"}>
+      <div
+        key={`${id}-${country_code}`}
+        className={locationClass}
+        onClick={() => onClickItem(id)}
+      >
         <div key={`${id}-${country}`} className="columns">
           <div className="column">
             <h6 className="title is-6">{title}</h6>

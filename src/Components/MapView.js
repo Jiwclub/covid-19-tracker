@@ -14,7 +14,7 @@ const icons = {
 };
 export const MapView = (props) => {
   // ถอดตัวแปล locationArray ออกจากตัวแปล props
-  const { locationArray } = props;
+  const { locationArray, mapCenter, onSelectMarker } = props;
 
   //
   const markerElements = locationArray.map((location) => {
@@ -29,24 +29,19 @@ export const MapView = (props) => {
     } = location;
 
     let markerIcon = icons.xxSmall;
-        if (confirmed >= 101 && confirmed <= 500) {
-            markerIcon = icons.xSmall;
-        }
-        else if (confirmed >= 501 && confirmed <= 1000) {
-            markerIcon = icons.small;
-        }
-        else if (confirmed >= 1001 && confirmed <= 5000) {
-            markerIcon = icons.normal;
-        }
-        else if (confirmed >= 5001 && confirmed <= 10000) {
-            markerIcon = icons.large;
-        }
-        else if (confirmed >= 10001 && confirmed <= 50000) {
-            markerIcon = icons.xLarge;
-        }
-        else if (confirmed >= 50001) {
-            markerIcon = icons.xxLarge;
-        }
+    if (confirmed >= 101 && confirmed <= 500) {
+      markerIcon = icons.xSmall;
+    } else if (confirmed >= 501 && confirmed <= 1000) {
+      markerIcon = icons.small;
+    } else if (confirmed >= 1001 && confirmed <= 5000) {
+      markerIcon = icons.normal;
+    } else if (confirmed >= 5001 && confirmed <= 10000) {
+      markerIcon = icons.large;
+    } else if (confirmed >= 10001 && confirmed <= 50000) {
+      markerIcon = icons.xLarge;
+    } else if (confirmed >= 50001) {
+      markerIcon = icons.xxLarge;
+    }
 
     let title = country;
     if (province !== "" && province !== country) {
@@ -58,13 +53,14 @@ export const MapView = (props) => {
         key={`${id}-${country_code}`}
         position={[latitude, longitude]}
         icon={markerIcon}
+        onclick={()=>onSelectMarker(id)}
       >
         <Popup>{title}</Popup>
       </Marker>
     );
   });
   return (
-    <Map className="map-view" center={[13, 100]} zoom={5}>
+    <Map className="map-view" center={mapCenter} zoom={5}>
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
